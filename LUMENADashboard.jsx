@@ -12,8 +12,9 @@ export default function LUMENADashboard() {
       return;
     }
     try {
+      // Use BrowserProvider if using ethers v6
       const provider = new ethers.BrowserProvider(window.ethereum);
-      const accounts = await provider.send('eth_requestAccounts', []);
+      const accounts = await provider.send("eth_requestAccounts", []);
       if (accounts.length > 0) {
         setWallet(accounts[0]);
         setError(null);
@@ -27,7 +28,6 @@ export default function LUMENADashboard() {
   };
 
   useEffect(() => {
-    // Attempt automatic connection on mount if desired
     if (typeof window !== "undefined" && window.ethereum) {
       connectWallet();
     }
@@ -39,14 +39,9 @@ export default function LUMENADashboard() {
       {error && <p style={{ color: "red" }}>{error}</p>}
       <p>Wallet: {wallet ? wallet : "Not connected"}</p>
       {!wallet && (
-        <button 
-          onClick={connectWallet} 
-          style={{
-            padding: "10px 20px",
-            fontSize: "16px",
-            cursor: "pointer",
-            marginTop: "10px"
-          }}
+        <button
+          onClick={connectWallet}
+          style={{ padding: "10px 20px", fontSize: "16px", marginTop: "10px", cursor: "pointer" }}
         >
           Connect Wallet
         </button>
